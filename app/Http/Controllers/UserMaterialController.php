@@ -8,7 +8,11 @@ class UserMaterialController extends Controller
 {
     //Informe de Detalle:
     public function getDetails(Request $request){
-        $reg = UserMaterial::select('id')
+        $reg = UserMaterial::join('products','user_materials.id_product','products.id')
+        ->join('materials','products.id_material','materials.id')
+        ->join('assign_materials','user_materials.id_assign_material','assign_materials.id')
+        ->select('assign_materials.date as Fecha de Asignación','materials.name as Nombre del Material','user_materials.quantity as Cantidad')
+        ->orderBy('user_materials.quantity','asc')
         ->get();
         return['Informe'=>$reg];
     }

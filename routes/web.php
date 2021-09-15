@@ -42,19 +42,19 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-//Control de Materials:
-Route::post('/api/materials/store',[MaterialController::class,'store']); //true
-Route::put('/api/materials/update',[MaterialController::class,'update']); //true
-Route::delete('/api/materials/delete',[MaterialController::class,'destroy']); //true
-Route::get('/api/materials/index',[MaterialController::class,'index']); //true
-Route::get('/api/materials/getData',[MaterialController::class,'getData']); //true
-
 //Control de Categories:
 Route::post('/api/categories/store',[CategoryController::class,'store']); //true
 Route::put('/api/categories/update',[CategoryController::class,'update']); //true
 Route::delete('/api/categories/delete', [CategoryController::class,'destroy']); //true
 Route::get('/api/categories/index',[CategoryController::class,'index']); //true
 Route::get('/api/categories/getData',[CategoryController::class,'getData']); //true
+
+//Control de Materials:
+Route::post('/api/materials/store',[MaterialController::class,'store']); //true
+Route::put('/api/materials/update',[MaterialController::class,'update']); //true
+Route::delete('/api/materials/delete',[MaterialController::class,'destroy']); //true
+Route::get('/api/materials/index',[MaterialController::class,'index']); //true
+Route::get('/api/materials/getData',[MaterialController::class,'getData']); //true
 
 //Control de Weight:
 Route::post('/api/weights/store',[WeightController::class,'store']); //true

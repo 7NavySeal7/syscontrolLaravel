@@ -26,15 +26,15 @@ class ProductsController extends Controller
     public function store(request $request){
         $prod = new Products;
         $prod->id=$request->id;
-        $prod->id_user=$request->id_user;
+        $prod->id_navegate=$request->id_navegate;
         $prod->id_material=$request->id_material;
         $prod->id_supplier=$request->id_supplier;
         //$prod->internal_code=$request->internal_code;
         $prod->external_code=$request->external_code;
         $prod->quantity=$request->quantity;
-        $prod->unit_weight=$request->unit_weight;
+        $prod->id_unit_weight=$request->id_unit_weight;
         $prod->weight_quantity=$request->weight_quantity;
-        $prod->u_measurement=$request->u_measurement;
+        $prod->id_umeasurement=$request->id_umeasurement;
         $prod->height_measurement=$request->height_measurement;
         $prod->width_measurement=$request->width_measurement;
         $prod->depth_measurement=$request->depth_measurement;

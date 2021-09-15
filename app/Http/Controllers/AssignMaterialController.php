@@ -33,7 +33,7 @@ class AssignMaterialController extends Controller
             $date=Carbon::now('America/Lima')->format('Y.m-d');
             $assign = new AssignMaterial();
             $assign->date=$date;
-            $assign->id_user=$request->id_user;
+            $assign->id_navegate=$request->id_navegate;
             $assign->save();
             $detalles=$request->data;
             foreach($detalles as $ep=>$valor){
