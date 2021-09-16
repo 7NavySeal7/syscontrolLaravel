@@ -25,7 +25,6 @@ class ProductsController extends Controller
     //Ingreso de Información:
     public function store(request $request){
         $prod = new Products;
-        $prod->id=$request->id;
         $prod->id_navegate=$request->id_navegate;
         $prod->id_material=$request->id_material;
         $prod->id_supplier=$request->id_supplier;
@@ -46,7 +45,6 @@ class ProductsController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $prod = Products::findOrFail($request->id);
-        $prod->id=$request->id;
         $prod->id_user=$request->id_user;
         $prod->id_material=$request->id_material;
         $prod->id_supplier=$request->id_supplier;

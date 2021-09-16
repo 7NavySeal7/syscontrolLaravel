@@ -42,33 +42,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-//Control de Categories:
-Route::post('/api/categories/store',[CategoryController::class,'store']); //true
-Route::put('/api/categories/update',[CategoryController::class,'update']); //true
-Route::delete('/api/categories/delete', [CategoryController::class,'destroy']); //true
-Route::get('/api/categories/index',[CategoryController::class,'index']); //true
-Route::get('/api/categories/getData',[CategoryController::class,'getData']); //true
+/*-------------------------------------------------------------------------------------------------------*/
 
-//Control de Materials:
-Route::post('/api/materials/store',[MaterialController::class,'store']); //true
-Route::put('/api/materials/update',[MaterialController::class,'update']); //true
-Route::delete('/api/materials/delete',[MaterialController::class,'destroy']); //true
-Route::get('/api/materials/index',[MaterialController::class,'index']); //true
-Route::get('/api/materials/getData',[MaterialController::class,'getData']); //true
-
-//Control de Weight:
-Route::post('/api/weights/store',[WeightController::class,'store']); //true
-Route::put('/api/weights/update',[WeightController::class,'update']); //true
-Route::delete('/api/weights/delete',[WeightController::class,'destroy']); //true
-Route::get('/api/weights/index',[WeightController::class,'index']); //true
-Route::get('/api/weights/getData',[WeightController::class,'getData']); //true
-
-//Control UnitOfMeasurements:
-Route::post('/api/measurements/store',[UnitOfMeasurementController::class,'store']); //true
-Route::put('/api/measurements/update',[UnitOfMeasurementController::class,'update']); //true
-Route::delete('/api/measurements/delete',[UnitOfMeasurementController::class,'destroy']); //true
-Route::get('/api/measurements/index',[UnitOfMeasurementController::class,'index']); //true
-Route::get('/api/measurements/getData',[UnitOfMeasurementController::class,'getData']); //true
+//Ingreso de Datos Sección de proveedores:
 
 //Control de Cities:
 Route::post('/api/cities/store',[CitiesController::class,'store']); //true
@@ -98,6 +74,10 @@ Route::delete('/api/vendors/delete',[VendorsController::class,'destroy']); //tru
 Route::get('/api/vendors/index',[VendorsController::class,'index']); //true
 Route::get('/api/vendors/getData',[VendorsController::class,'getData']); //true
 
+/*-------------------------------------------------------------------------------------------------------*/
+
+//Ingreso de Datos Sección de Usuarios:
+
 //Control de Roles:
 Route::post('/api/roles/store',[RolesController::class,'store']); //true
 Route::put('/api/roles/update',[RolesController::class,'update']); //true
@@ -119,12 +99,45 @@ Route::delete('/api/navegate/delete',[NavegateController::class,'destroy']); //t
 Route::get('/api/navegate/index',[NavegateController::class,'index']); //true
 Route::get('/api/navegate/getData',[NavegateController::class,'getData']); //true
 
-//Control de AssignMaterials:
-Route::post('/api/assign/store',[AssignMaterialController::class,'store']); //true
-Route::put('/api/assign/update',[AssignMaterialController::class,'update']); //true
-Route::delete('/api/assign/delete',[AssignMaterialController::class,'destroy']); //true
-Route::get('/api/assign/index',[AssignMaterialController::class,'index']); //true
-Route::get('/api/assign/getData',[AssignMaterialController::class,'getData']); //true
+/*-------------------------------------------------------------------------------------------------------*/
+
+//Ingreso de Datos Sección Categorias y Materiales:
+
+//Control de Categories:
+Route::post('/api/categories/store',[CategoryController::class,'store']); //true
+Route::put('/api/categories/update',[CategoryController::class,'update']); //true
+Route::delete('/api/categories/delete', [CategoryController::class,'destroy']); //true
+Route::get('/api/categories/index',[CategoryController::class,'index']); //true
+Route::get('/api/categories/getData',[CategoryController::class,'getData']); //true
+
+//Control de Materials:
+Route::post('/api/materials/store',[MaterialController::class,'store']); //true
+Route::put('/api/materials/update',[MaterialController::class,'update']); //true
+Route::delete('/api/materials/delete',[MaterialController::class,'destroy']); //true
+Route::get('/api/materials/index',[MaterialController::class,'index']); //true
+Route::get('/api/materials/getData',[MaterialController::class,'getData']); //true
+
+/*-------------------------------------------------------------------------------------------------------*/
+
+//Ingreso de Datos Peso y Unidades de Medida:
+
+//Control de Weight:
+Route::post('/api/weights/store',[WeightController::class,'store']); //true
+Route::put('/api/weights/update',[WeightController::class,'update']); //true
+Route::delete('/api/weights/delete',[WeightController::class,'destroy']); //true
+Route::get('/api/weights/index',[WeightController::class,'index']); //true
+Route::get('/api/weights/getData',[WeightController::class,'getData']); //true
+
+//Control UnitOfMeasurements:
+Route::post('/api/measurements/store',[UnitOfMeasurementController::class,'store']); //true
+Route::put('/api/measurements/update',[UnitOfMeasurementController::class,'update']); //true
+Route::delete('/api/measurements/delete',[UnitOfMeasurementController::class,'destroy']); //true
+Route::get('/api/measurements/index',[UnitOfMeasurementController::class,'index']); //true
+Route::get('/api/measurements/getData',[UnitOfMeasurementController::class,'getData']); //true
+
+/*-------------------------------------------------------------------------------------------------------*/
+
+//Ingreso de datos Sección de Productos:
 
 //Control de Products:
 Route::post('/api/products/store',[ProductsController::class,'store']); //true
@@ -133,9 +146,23 @@ Route::delete('/api/products/delete',[ProductsController::class,'destroy']); //t
 Route::get('/api/products/index',[ProductsController::class,'index']); //true
 Route::get('/api/products/getData',[ProductsController::class,'getData']); //true
 
+/*-------------------------------------------------------------------------------------------------------*/
+
+//Ingreso de datos Asignación de Material y Registro de Asignación en UserMaterial:
+
+//Control de AssignMaterials:
+Route::post('/api/assign/store',[AssignMaterialController::class,'store']); //true
+Route::put('/api/assign/update',[AssignMaterialController::class,'update']); //true
+Route::delete('/api/assign/delete',[AssignMaterialController::class,'destroy']); //true
+Route::get('/api/assign/index',[AssignMaterialController::class,'index']); //true
+Route::get('/api/assign/getData',[AssignMaterialController::class,'getData']); //true
+
+
 //Control de UserMaterials:
 Route::get('/api/user_materials/getDetails',[UserMaterialController::class,'getDetails']); //true
 Route::put('/api/user_materials/update',[UserMaterialController::class,'update']); //true
 Route::delete('/api/user_material/delete',[UserMaterialController::class,'destroy']); //true
 Route::get('/api/user_material/index',[UserMaterialController::class,'index']); //true
 Route::get('/api/user_material/getData',[UserMaterialController::class,'getData']); //true
+
+/*-------------------------------------------------------------------------------------------------------*/
