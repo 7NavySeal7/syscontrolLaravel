@@ -15,16 +15,19 @@ class AssignMaterialController extends Controller
     {
         $buscar=$request->id;
         if ($buscar=='') {
-            $assign = AssignMaterial::select('id')->get();
+            $assign = AssignMaterial::select('id','date')->get();
+            $useMat = UserMaterial::select('id','quantity')->get();
         }else{
             $assign = AssignMaterial::select('id')->where('id','=',$buscar)->get();
+            $useMat = UserMaterial::select('id')->where('id','=',$buscar)->get();
         }
-        return ['assign'=>$assign];
+        return ['Informe de Asignación'=>['assign'=>$assign, 'useMat'=>$useMat]];
     }   
     //Indexación de Información:
     public function index(Request $request){
         $assign = AssignMaterial::get();
-        return['assign'=>$assign];
+        $useMat = UserMaterial::get();
+        return['assign'=>$assign, 'useMat'=>$useMat];
     }
     //Ingreso de información:
     public function store(Request $request){
@@ -50,17 +53,43 @@ class AssignMaterialController extends Controller
 }
     //Actualización de información:
     public function update(Request $request){
-        $assign = AssignMaterial::findOrFail($request->id);
-        //$assing->id=$request->id;
-        $assign->date=$request->date;
-        $assign->id_user=$request->id_user;
-        //Metodo Guardar:
-        $assign->save();
+        try {
+            DB::beginTransaction();
+            $date=Carbon::now('America/Lima')->format('Y.m-d');
+            $assign = AssignMaterial::findOrFail($request->id);
+            $assign->date=$date;
+            $assign->id_navegate=$request->id_navegate;
+            $assign->save();
+            $detalles=$request->data;
+            foreach($detalles as $ep=>$valor){
+                $detAssign = UserMaterial::findOrFail($valor['id']);
+                $detAssign->id_assign_material=$assign->id;
+                $detAssign->id_product=$valor['id_product'];
+                $detAssign->quantity=$valor['quantity'];
+                $detAssign->save();
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
+    
     //Eliminación de Información:
     public function destroy(Request $request){
-        $assign = AssignMaterial::findOrFail($request->id);
-        //Metodo Eliminar
-        $assign->delete();
+        try {
+            DB::beginTransaction();
+            $detalles=$request->data;
+            foreach($detalles as $ep=>$valor){
+                $detAssign = UserMaterial::findOrFail($valor['id']);
+                //Metodo Eliminar
+                $detAssign->delete();
+            }
+            $assign = AssignMaterial::findOrFail($request->id);
+            //Metodo Eliminar
+            $assign->delete();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vendors;
+use Inertia\Inertia;
 
 class VendorsController extends Controller
 {
@@ -19,8 +20,11 @@ class VendorsController extends Controller
     }   
     //Indexación de Información:
     public function index(Request $request){
-        $proved = Vendors::get();
-        return['proved'=>$proved];
+        $proved = Vendors::join('countries','vendors.id_country','countries.id')
+        ->select('vendors.name','vendors.nit','vendors.direction','vendors.email',
+        'vendors.contact','vendors.web','countries.name as pais')
+        ->get();
+        return Inertia::render('Proveedores',['proved'=>$proved]);
     }
     //Ingreso de información:
     public function store(request $request){

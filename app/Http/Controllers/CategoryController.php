@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -20,7 +21,7 @@ class CategoryController extends Controller
     //Indexación de Información:
     public function index(Request $request){
         $categ = Category::get();
-        return['categ'=>$categ];
+        return inertia('Categorias',['categ'=>$categ]);
     }
     //Ingreso de Información:
     public function store(request $request){

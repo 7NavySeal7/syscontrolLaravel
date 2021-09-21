@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Material;
+use Inertia\Inertia;
 
 class MaterialController extends Controller
 {
@@ -19,8 +20,10 @@ class MaterialController extends Controller
     }
     //Indexación de Información:
     public function index(Request $request){
-        $material = Material::get();
-        return['material'=>$material];
+        $material = Material::join('categories','materials.id_category','categories.id')
+        ->select('materials.code','materials.name','categories.name as categname','materials.description')
+        ->get();
+        return inertia('Materiales',['material'=>$material]);
     } 
     //Ingreso de Informacion: 
     public function store(request $request){

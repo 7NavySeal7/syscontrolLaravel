@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Navegate;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class NavegateController extends Controller
 {
@@ -19,8 +20,11 @@ class NavegateController extends Controller
     }   
     //Indexación de Información:
     public function index(Request $request){
-        $useCont = Navegate::get();
-        return['useCont'=>$useCont];
+        $useCont = Navegate::join('charges','navegates.id_charge','charges.id')
+        ->select('navegates.name','navegates.surname','navegates.phone','navegates.email',
+        'navegates.id_roles','charges.name as nameCharg')
+        ->get();
+        return Inertia::render('Usuarios', ['usuarios'=>$useCont]);
     }
     //Ingreso de información:
     public function store(request $request){

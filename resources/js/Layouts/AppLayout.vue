@@ -22,6 +22,26 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
+
+                                <jet-nav-link :href="route('usuario')" :active="route().current('usuario')">
+                                    Usuarios
+                                </jet-nav-link>
+
+                                <jet-nav-link :href="route('proveedores')" :active="route().current('proveedores')">
+                                    Proveedores
+                                </jet-nav-link>
+                                
+                                <jet-nav-link :href="route('categorias')" :active="route().current('categorias')">
+                                    Categorias
+                                </jet-nav-link>
+                            
+                                <jet-nav-link :href="route('materiales')" :active="route().current('materiales')">
+                                    Materiales
+                                </jet-nav-link>
+                            
+                                <jet-nav-link :href="route('productos')" :active="route().current('productos')">
+                                    Productos
+                                </jet-nav-link>
                             </div>
                         </div>
 
