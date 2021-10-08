@@ -25,10 +25,14 @@ class MaterialController extends Controller
         ->get();
         return inertia('Materiales',['material'=>$material]);
     } 
+    
+    public function index2(Request $request){
+        $material = Material::get();
+        return ['material'=>$material];
+    } 
     //Ingreso de Informacion: 
     public function store(request $request){
         $material = new Material;
-        $material->id = $request->id;
         $material->code = $request->code;
         $material->name = $request->name;
         $material->id_category = $request->id_category;
@@ -39,8 +43,8 @@ class MaterialController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $material = Material::findOrFail($request->id);
-        $material->id = $request->id;
         $material->name = $request->name;
+        $material->id_category = $request->id_category;
         $material->description = $request->description;
         //Metodo de Guardar
         $material->save();

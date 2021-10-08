@@ -67,10 +67,11 @@ Route::get('/api/countries/index',[CountryController::class,'index'])->name('cou
 Route::get('/api/countries/getData',[CountryController::class,'getData']); //true
 
 //Control de Vendors:
-Route::post('/api/vendors/store',[VendorsController::class,'store']); //true
-Route::put('/api/vendors/update',[VendorsController::class,'update']); //true
-Route::delete('/api/vendors/delete',[VendorsController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/vendors/store',[VendorsController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/vendors/update',[VendorsController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/vendors/delete',[VendorsController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/vendors/index',[VendorsController::class,'index'])->name('proveedores'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/vendors/index2',[VendorsController::class,'index2']); //true
 Route::get('/api/vendors/getData',[VendorsController::class,'getData']); //true
 
 /*-------------------------------------------------------------------------------------------------------*/
@@ -92,10 +93,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/api/roles/index',[RolesCo
 Route::get('/api/roles/getData',[RolesController::class,'getData']); //true
 
 //Control de Navegates:
-Route::post('/api/navegate/store',[NavegateController::class,'store']); //true
-Route::put('/api/navegate/update',[NavegateController::class,'update']); //true
-Route::delete('/api/navegate/delete',[NavegateController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/navegate/store',[NavegateController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/navegate/update',[NavegateController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/navegate/delete',[NavegateController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/navegate/index',[NavegateController::class,'index'])->name('usuario'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/navegate/index2',[NavegateController::class,'index2']); //true
 Route::get('/api/navegate/getData',[NavegateController::class,'getData']); //true
 
 /*-------------------------------------------------------------------------------------------------------*/
@@ -103,17 +105,19 @@ Route::get('/api/navegate/getData',[NavegateController::class,'getData']); //tru
 //Ingreso de Datos Sección Categorias y Materiales:
 
 //Control de Categories:
-Route::post('/api/categories/store',[CategoryController::class,'store']); //true
-Route::put('/api/categories/update',[CategoryController::class,'update']); //true
-Route::delete('/api/categories/delete', [CategoryController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/categories/store',[CategoryController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/categories/update',[CategoryController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/categories/delete', [CategoryController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/categories/index',[CategoryController::class,'index'])->name('categorias'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/categories/index2',[CategoryController::class,'index2']); //true
 Route::get('/api/categories/getData',[CategoryController::class,'getData']); //true
 
 //Control de Materials:
-Route::post('/api/materials/store',[MaterialController::class,'store']); //true
-Route::put('/api/materials/update',[MaterialController::class,'update']); //true
-Route::delete('/api/materials/delete',[MaterialController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/materials/store',[MaterialController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/materials/update',[MaterialController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/materials/delete',[MaterialController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/materials/index',[MaterialController::class,'index'])->name('materiales'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/materials/index2',[MaterialController::class,'index2']); //true
 Route::get('/api/materials/getData',[MaterialController::class,'getData']); //true
 
 /*-------------------------------------------------------------------------------------------------------*/
@@ -139,10 +143,11 @@ Route::get('/api/measurements/getData',[UnitOfMeasurementController::class,'getD
 //Ingreso de datos Sección de Productos:
 
 //Control de Products:
-Route::post('/api/products/store',[ProductsController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/products/store',[ProductsController::class,'store']); //true
 Route::put('/api/products/update',[ProductsController::class,'update']); //true
 Route::delete('/api/products/delete',[ProductsController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/products/index',[ProductsController::class,'index'])->name('productos'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/products/index2',[ProductsController::class,'index2']); //true
 Route::get('/api/products/getData',[ProductsController::class,'getData']); //true
 
 /*-------------------------------------------------------------------------------------------------------*/
@@ -153,7 +158,7 @@ Route::get('/api/products/getData',[ProductsController::class,'getData']); //tru
 Route::post('/api/assign/store',[AssignMaterialController::class,'store']); //true
 Route::put('/api/assign/update',[AssignMaterialController::class,'update']); //true
 Route::delete('/api/assign/delete',[AssignMaterialController::class,'destroy']); //true
-Route::middleware(['auth:sanctum', 'verified'])->get('/api/assign/index',[AssignMaterialController::class,'index'])->name('asignaciónMaterial'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/assign/index',[AssignMaterialController::class,'index'])->name('asignacionMaterial'); //true
 Route::get('/api/assign/getData',[AssignMaterialController::class,'getData']); //true
 
 

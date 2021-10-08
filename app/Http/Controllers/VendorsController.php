@@ -26,6 +26,11 @@ class VendorsController extends Controller
         ->get();
         return Inertia::render('Proveedores',['proved'=>$proved]);
     }
+
+    public function index2(Request $request){
+        $proved = Vendors::get();
+        return ['proved'=>$proved];
+    }
     //Ingreso de información:
     public function store(request $request){
         $proved = new Vendors;

@@ -7,6 +7,7 @@ use App\Models\AssignMaterial;
 use App\Models\UserMaterial;
 use Carbon\Carbon;
 use FFI\Exception;
+use Inertia\Inertia;
 
 class AssignMaterialController extends Controller
 {
@@ -16,18 +17,26 @@ class AssignMaterialController extends Controller
         $buscar=$request->id;
         if ($buscar=='') {
             $assign = AssignMaterial::select('id','date')->get();
-            $useMat = UserMaterial::select('id','quantity')->get();
+            $detAssign = UserMaterial::select('id','quantity')->get();
         }else{
             $assign = AssignMaterial::select('id')->where('id','=',$buscar)->get();
-            $useMat = UserMaterial::select('id')->where('id','=',$buscar)->get();
+            $detAssign = UserMaterial::select('id')->where('id','=',$buscar)->get();
         }
-        return ['Informe de Asignación'=>['assign'=>$assign, 'useMat'=>$useMat]];
+        return ['Informe de Asignación'=>['assign'=>$assign, 'useMat'=>$detAssign]];
     }   
     //Indexación de Información:
     public function index(Request $request){
-        $assign = AssignMaterial::get();
-        $useMat = UserMaterial::get();
-        return['assign'=>$assign, 'useMat'=>$useMat];
+        $assign = AssignMaterial::join('navegates','assign_materials.id_navegate','navegates.id')
+        ->select('assign_materials.date','navegates.name as nameNav')
+        ->get();
+        $detAssign = UserMaterial::join('products','user_materials.id_product','products.id')
+        ->join('materials','products.id_material','materials.id')
+        ->join('categories','materials.id_category','categories.id')
+        ->select('user_materials.quantity','materials.name as nameMat','products.picture','categories.name as nameCat')
+        ->get();
+        return inertia::render('Asignacion',['assign'=>$assign, 'detAssign'=>$detAssign ]);
+        // $info = array_merge($assign,$detAssign);
+        
     }
     //Ingreso de información:
     public function store(Request $request){

@@ -32,6 +32,19 @@ class ProductsController extends Controller
         ->get();
         return Inertia::render('Productos',['prod'=>$prod]);
     }
+    public function index2(Request $request){
+        $prod = Products::join('navegates','products.id_navegate','navegates.id')
+        ->join('materials','products.id_material','materials.id')
+        ->join('vendors','products.id_supplier','vendors.id')
+        ->join('weights','products.id_unit_weight','weights.id')
+        ->join('unit_of_measurements','products.id_umeasurement','unit_of_measurements.id')
+        ->select('navegates.name as nameNav','materials.name as nameMat','vendors.name as nameProv',
+        'products.external_code','products.quantity','weights.name as nameWeight','products.weight_quantity',
+        'unit_of_measurements.name as nameUnit','products.height_measurement','products.width_measurement',
+        'products.depth_measurement','products.condition','products.picture')
+        ->get();
+        return ['prod'=>$prod];
+    }
     //Ingreso de Información:
     public function store(request $request){
         $prod = new Products;

@@ -23,6 +23,11 @@ class CategoryController extends Controller
         $categ = Category::get();
         return inertia('Categorias',['categ'=>$categ]);
     }
+
+    public function index2(Request $request){
+        $categ = Category::get();
+        return ['categ'=>$categ];
+    }
     //Ingreso de Información:
     public function store(request $request){
         $categ = new Category;
