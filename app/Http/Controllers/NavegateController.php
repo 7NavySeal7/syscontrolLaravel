@@ -28,7 +28,12 @@ class NavegateController extends Controller
     }
 
     public function index2(Request $request){
-        $useCont = Navegate::get();
+        $useCont = Navegate::join('charges','navegates.id_charge','charges.id')
+        ->join('roles','navegates.id_roles','roles.id')
+        ->select('navegates.id as idNav','navegates.name','navegates.surname','navegates.phone','navegates.email',
+        'roles.id as idRoles','roles.name as nameRol','charges.id as idCharges','charges.name as nameCharg',
+        'navegates.password')
+        ->get();
         return ['usuarios'=>$useCont];
     }
 

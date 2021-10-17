@@ -28,7 +28,14 @@ class VendorsController extends Controller
     }
 
     public function index2(Request $request){
-        $proved = Vendors::get();
+        $proved = Vendors::join('countries','vendors.id_country','countries.id')
+        ->join('departaments','countries.id_departament','departaments.id')
+        ->join('cities','departaments.id_city','cities.id')
+        ->select('vendors.id','vendors.name','vendors.nit','vendors.direction','vendors.email',
+        'vendors.contact','departaments.id as idDepart','departaments.name as nameDepart',
+        'cities.id as idCity','cities.name as nameCity',
+        'countries.id as idCountry','countries.name as nameCountry','vendors.web')
+        ->get();
         return ['proved'=>$proved];
     }
     //Ingreso de información:

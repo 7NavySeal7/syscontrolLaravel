@@ -1,14 +1,14 @@
 <template>
     <app-layout title="Dashboard">
         <template #header>
-            <h2 class="font-semibold text-center text-xl text-blue-800 leading-tight">
+            <h2 class="font-semibold text-center text-xl text-black leading-tight">
                 CATEGORIAS
             </h2>
         </template>
                     <!--Formulario de Usuario-->
-                    <section v-if="window==0" class="max-w-4xl mx-auto bg-indigo-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
+                    <section v-if="window==0" class="border-gray-900 max-w-4xl mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
                         <div class="pt-1 pr-1 flex justify-end">
-                            <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-white transition-colors duration-200 transform rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-gray-600">
+                            <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-white transition-colors duration-200 transform rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                 height="24px" viewBox="0 0 24 24" 
                                 width="24px" fill="#000000">
@@ -20,20 +20,20 @@
                         <h1 class="text-xl font-bold text-black uppercase dark:text-white">{{titulo}}</h1>                      
                             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                                 <div>
-                                    <label class="text-white dark:text-gray-200" for="name">Nombre</label>
+                                    <label class="text-black dark:text-gray-200" for="name">Nombre</label>
                                     <input v-model="nombre" id="name" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                 </div>
 
                                 <div>
-                                    <label class="text-white dark:text-gray-200" for="description">Descripción</label>
+                                    <label class="text-black dark:text-gray-200" for="description">Descripción</label>
                                     <input v-model="descripcion" id="description" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                 </div>
                             </div>
                             <div v-if="accion==0" class="flex justify-end mt-6">
-                                <button type="button" @click="register" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
+                                <button title="Guardar" type="button" @click="register" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
                             </div>
                             <div v-else class="flex justify-end mt-6">
-                                <button @click="save" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
+                                <button title="Actualizar" type="button" @click="update" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
                             </div>
                         </form>
                     </section>
@@ -171,7 +171,8 @@
             },
             downRegister(){
                 this.window = 1, //Tabla
-                this.accion = 0
+                this.accion = 0,
+                this.clean();
             },
 /*-------------------------------------------------------------------------------------------------------*/
 //Registrar

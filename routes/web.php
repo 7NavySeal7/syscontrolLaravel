@@ -51,12 +51,15 @@ Route::post('/api/cities/store',[CitiesController::class,'store']); //true
 Route::put('/api/cities/update',[CitiesController::class,'update']); //true
 Route::delete('/api/cities/delete',[CitiesController::class,'destroy']); //true
 Route::get('/api/cities/index',[CitiesController::class,'index'])->name('cities'); //true
+Route::get('/api/cities/index2',[CitiesController::class,'index2']); //true
 Route::get('/api/cities/getData',[CitiesController::class,'getData']); //true
+
 //Control de Departaments:
 Route::post('/api/departaments/store',[DepartamentController::class,'store']); //true
 Route::put('/api/departaments/update',[DepartamentController::class,'update']); //true
 Route::delete('/api/departaments/delete',[DepartamentController::class,'destroy']); //true
 Route::get('/api/departaments/index',[DepartamentController::class,'index'])->name('departaments'); //true
+Route::get('/api/departaments/index2',[DepartamentController::class,'index2']); //true
 Route::get('/api/departaments/getData',[DepartamentController::class,'getData']); //true
 
 //Control de Countries:
@@ -64,6 +67,7 @@ Route::post('/api/countries/store',[CountryController::class,'store']); //true
 Route::put('/api/countries/update',[CountryController::class,'update']); //true
 Route::delete('/api/countries/delete',[CountryController::class,'destroy']); //true
 Route::get('/api/countries/index',[CountryController::class,'index'])->name('countries'); //true
+Route::get('/api/countries/index2',[CountryController::class,'index2']); //true
 Route::get('/api/countries/getData',[CountryController::class,'getData']); //true
 
 //Control de Vendors:
@@ -79,17 +83,19 @@ Route::get('/api/vendors/getData',[VendorsController::class,'getData']); //true
 //Ingreso de Datos Sección de Usuarios:
 
 //Control de Charges:
-Route::post('/api/charges/store',[ChargesController::class,'store']); //true
-Route::put('/api/charges/update',[ChargesController::class,'update']); //true
-Route::delete('/api/charges/delete',[ChargesController::class,'destroy']); //true
-Route::middleware(['auth:sanctum', 'verified'])->get('/api/charges/index',[ChargesController::class,'index'])->name('cargos'); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/charges/store',[ChargesController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/charges/update',[ChargesController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/charges/delete',[ChargesController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/charges/index',[ChargesController::class,'index'])->name('cargos');  //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/charges/index2',[ChargesController::class,'index2']);  //true
 Route::get('/api/charges/getData',[ChargesController::class,'getData']); //true
 
 //Control de Roles:
-Route::post('/api/roles/store',[RolesController::class,'store']); //true
-Route::put('/api/roles/update',[RolesController::class,'update']); //true
-Route::delete('/api/roles/delete',[RolesController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/roles/store',[RolesController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/roles/update',[RolesController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/roles/delete',[RolesController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/roles/index',[RolesController::class,'index'])->name('roles'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/roles/index2',[RolesController::class,'index2']); //true
 Route::get('/api/roles/getData',[RolesController::class,'getData']); //true
 
 //Control de Navegates:
@@ -125,17 +131,19 @@ Route::get('/api/materials/getData',[MaterialController::class,'getData']); //tr
 //Ingreso de Datos Peso y Unidades de Medida:
 
 //Control de Weight:
-Route::post('/api/weights/store',[WeightController::class,'store']); //true
-Route::put('/api/weights/update',[WeightController::class,'update']); //true
-Route::delete('/api/weights/delete',[WeightController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/weights/store',[WeightController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/weights/update',[WeightController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/weights/delete',[WeightController::class,'destroy']); //true
 Route::get('/api/weights/index',[WeightController::class,'index']); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/weights/index2',[WeightController::class,'index2']); //true
 Route::get('/api/weights/getData',[WeightController::class,'getData']); //true
 
 //Control UnitOfMeasurements:
-Route::post('/api/measurements/store',[UnitOfMeasurementController::class,'store']); //true
-Route::put('/api/measurements/update',[UnitOfMeasurementController::class,'update']); //true
-Route::delete('/api/measurements/delete',[UnitOfMeasurementController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/measurements/store',[UnitOfMeasurementController::class,'store']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/measurements/update',[UnitOfMeasurementController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/measurements/delete',[UnitOfMeasurementController::class,'destroy']); //true
 Route::get('/api/measurements/index',[UnitOfMeasurementController::class,'index']); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/measurements/index2',[UnitOfMeasurementController::class,'index2']); //true
 Route::get('/api/measurements/getData',[UnitOfMeasurementController::class,'getData']); //true
 
 /*-------------------------------------------------------------------------------------------------------*/
@@ -144,8 +152,8 @@ Route::get('/api/measurements/getData',[UnitOfMeasurementController::class,'getD
 
 //Control de Products:
 Route::middleware(['auth:sanctum', 'verified'])->post('/api/products/store',[ProductsController::class,'store']); //true
-Route::put('/api/products/update',[ProductsController::class,'update']); //true
-Route::delete('/api/products/delete',[ProductsController::class,'destroy']); //true
+Route::middleware(['auth:sanctum', 'verified'])->put('/api/products/update',[ProductsController::class,'update']); //true
+Route::middleware(['auth:sanctum', 'verified'])->post('/api/products/delete',[ProductsController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/products/index',[ProductsController::class,'index'])->name('productos'); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/products/index2',[ProductsController::class,'index2']); //true
 Route::get('/api/products/getData',[ProductsController::class,'getData']); //true

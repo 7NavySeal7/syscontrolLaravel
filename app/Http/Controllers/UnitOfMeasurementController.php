@@ -22,6 +22,11 @@ class UnitOfMeasurementController extends Controller
         $unit = UnitOfMeasurement::get();
         return['unit'=>$unit];
     }
+
+    public function index2(Request $request){
+        $unit = UnitOfMeasurement::get();
+        return['unit'=>$unit];
+    }
     //Ingreso de información:
     public function store(request $request){
         $unit = new UnitOfMeasurement;

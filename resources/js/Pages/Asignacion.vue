@@ -1,14 +1,14 @@
 <template>
     <app-layout title="Dashboard">
         <template #header>
-            <h2 class="uppercase font-semibold text-center text-xl text-blue-800 leading-tight">
+            <h2 class="uppercase font-semibold text-center text-black text-xl text-blue-800 leading-tight">
                 Asignaciones de Material
             </h2>
         </template>
         <!--Formulario de Usuario-->
-        <section v-if="window==0" class="max-w-4xl mx-auto bg-indigo-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
+        <section v-if="window==0" class="border-gray-900 max-w-4xl mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
             <div class="pt-1 pr-1 flex justify-end">
-                <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-white transition-colors duration-200 transform rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-gray-600">
+                <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-white transition-colors duration-200 transform rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" 
                     height="24px" viewBox="0 0 24 24" 
                     width="24px" fill="#000000">
@@ -19,36 +19,38 @@
             <form class="pl-6 pb-6 pr-6">
                 <h1 class="flex justify-start text-xl font-bold text-black uppercase dark:text-white">{{titulo}}</h1>
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                    
                     <div>
-                        <label class="text-white dark:text-gray-200" for="user">Categoria</label>
-                        <select class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                            <option>Surabaya</option>
-                            <option>Jakarta</option>
-                            <option>Tangerang</option>
-                            <option>Bandung</option>
+                        <label class="text-black dark:text-gray-200" for="user">Asignado a:</label>
+                        <select v-model="nameUser" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option v-for="item in arrayDatosUser" :key="item.id" :value="item.id">{{item.name}}</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="text-black dark:text-gray-200" for="user">Categoria</label>
+                        <select v-model="nameCat" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option v-for="item in arrayDatosCat" :key="item.id" :value="item.id">{{item.name}}</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="text-white dark:text-gray-200" for="material">Material</label>
-                        <select class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                            <option>Surabaya</option>
-                            <option>Jakarta</option>
-                            <option>Tangerang</option>
-                            <option>Bandung</option>
+                        <label class="text-black dark:text-gray-200" for="material">Material</label>
+                        <select v-model="nameMat" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option v-for="item in arrayDatosMat" :key="item.id" :value="item.id">{{item.name}}</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="text-white dark:text-gray-200" for="quantity">Cantidad</label>
-                        <input id="quantity" type="number" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                        <label class="text-black dark:text-gray-200" for="quantity">Cantidad</label>
+                        <input v-model="cantidad" id="quantity" type="number" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                     </div> 
                 </div>
                 <div v-if="accion==0" class="flex justify-end mt-6">
-                    <button @click="save" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
+                    <button title="Guardar" type="button" @click="save" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
                 </div>
                 <div v-else class="flex justify-end mt-6">
-                    <button @click="save" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
+                    <button title="Actualizar" type="button" @click="save" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
                 </div>
             </form>
         </section>
@@ -68,7 +70,7 @@
                                     <thead>
                                         <tr class="bg-blue-100 text-black-600 uppercase text-sm leading-normal">
                                             <th class="py-3 px-6 text-center">Fecha de entrega</th>
-                                            <th class="py-3 px-6 text-center">Asignado por</th>
+                                            <th class="py-3 px-6 text-center">Asignado a</th>
                                             <th class="py-3 px-6 text-center">Acciones</th>
                                         </tr>
                                     </thead>
@@ -110,7 +112,7 @@
                     </div>
                 </div>
             <!--Fin de la Tabla Asignación de Material-->
-            <!-- Tabla Detalle de Material -->
+            <!-- Tabla Detalle de Material
                 <div class="overflow-x-auto">
                         <div class="min-w-screen min-h-screen flex items-start justify-center font-sans overflow-hidden">
                             <div class="w-full lg:w-auto">
@@ -170,7 +172,7 @@
                             </div>
                         </div>
                     </div>
-            <!--Fin de Tabla Detalle de Material-->
+                Fin de Tabla Detalle de Material-->
         </div>
     </app-layout>
 </template>
@@ -184,18 +186,63 @@
         components: {
             AppLayout,
         },
-        props:[
-        'assign',
-        'detAssign'
-        ],
+        //props:['assign'],
+        mounted(){
+            this.listarDatosUser();
+            this.listarDatosCat();
+            this.listarDatosMat();
+        },
         data() {
             return {
                 window: 1, //1: Tabla 0: Nuevo Registro
                 titulo: "",
-                accion: 0 //0: Guardar Registro 1: Actualizar Registro
+                accion: 0,
+                nameUser:"",
+                nameCateg:"",
+                nameMat:"",
+                cantidad:"",
+                arrayDatosUser:[],
+                arrayDatosCat:[],
+                arrayDatosMat:[] //0: Guardar Registro 1: Actualizar Registro
             }
         },
         methods: {
+            listarDatosMat(){
+                let me=this;
+                var url="/api/materials/index2";
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDatosMat=respuesta.material;
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            },
+            listarDatosCat(){
+                let me=this;
+                var url="/api/categories/index2";
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDatosCat=respuesta.categ;
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            },
+            listarDatosUser(){
+                let me=this;
+                var url="/api/navegate/index2";
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDatosUser=respuesta.usuarios;
+                })
+                .catch(function(error){ 
+                    console.log(error);
+                })
+            },
             openRegister(){
                 this.window = 0, //Habilitar ventana de registro.
                 this.titulo = "Registrar Nueva Asignación",

@@ -19,7 +19,6 @@ class CreateNavegatesTable extends Migration
             $table->string('surname');
             $table->string('phone',50);
             $table->string('email');
-            $table->string('type_of_user');
             $table->foreignId('id_roles')->constrained('roles');
             $table->foreignId('id_charge')->constrained('charges');
             //$table->timestamp('email_verified_at')->nullable();

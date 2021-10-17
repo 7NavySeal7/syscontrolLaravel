@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_navegate')->constrained('navegates');
+            // $table->foreignId('id_navegate')->constrained('navegates');
             $table->foreignId('id_material')->constrained('materials');
             $table->foreignId('id_supplier')->constrained('vendors');
             //$table->string('internal_code'); //scan

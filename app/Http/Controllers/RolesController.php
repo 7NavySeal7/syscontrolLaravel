@@ -22,10 +22,13 @@ class RolesController extends Controller
         $rol = Roles::get();
         return['rol'=>$rol];
     }
+    public function index2(Request $request){
+        $rol = Roles::get();
+        return['rol'=>$rol];
+    }
     //Ingreso de Información:
     public function store(request $request){
         $rol = new Roles;
-        $rol->id=$request->id;
         $rol->name=$request->name;
         //Metodo Guardar:
         $rol->save();
@@ -33,7 +36,6 @@ class RolesController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $rol = Roles::findOrFail($request->id);
-        $rol->id=$request->id;
         $rol->name=$request->name;
         //Metodo Guardar:
         $rol->save();

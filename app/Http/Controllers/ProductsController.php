@@ -20,12 +20,11 @@ class ProductsController extends Controller
     }   
     //Indexación de Información:
     public function index(Request $request){
-        $prod = Products::join('navegates','products.id_navegate','navegates.id')
-        ->join('materials','products.id_material','materials.id')
+        $prod = Products::join('materials','products.id_material','materials.id')
         ->join('vendors','products.id_supplier','vendors.id')
         ->join('weights','products.id_unit_weight','weights.id')
         ->join('unit_of_measurements','products.id_umeasurement','unit_of_measurements.id')
-        ->select('navegates.name as nameNav','materials.name as nameMat','vendors.name as nameProv',
+        ->select('products.id_material','materials.name as nameMat','vendors.name as nameProv','products.id_supplier',
         'products.external_code','products.quantity','weights.name as nameWeight','products.weight_quantity',
         'unit_of_measurements.name as nameUnit','products.height_measurement','products.width_measurement',
         'products.depth_measurement','products.condition','products.picture')
@@ -33,14 +32,14 @@ class ProductsController extends Controller
         return Inertia::render('Productos',['prod'=>$prod]);
     }
     public function index2(Request $request){
-        $prod = Products::join('navegates','products.id_navegate','navegates.id')
-        ->join('materials','products.id_material','materials.id')
+        $prod = Products::join('materials','products.id_material','materials.id')
         ->join('vendors','products.id_supplier','vendors.id')
         ->join('weights','products.id_unit_weight','weights.id')
         ->join('unit_of_measurements','products.id_umeasurement','unit_of_measurements.id')
-        ->select('navegates.name as nameNav','materials.name as nameMat','vendors.name as nameProv',
-        'products.external_code','products.quantity','weights.name as nameWeight','products.weight_quantity',
-        'unit_of_measurements.name as nameUnit','products.height_measurement','products.width_measurement',
+        ->select('products.id as idProd','materials.id as id_material','materials.name as nameMat','vendors.id as id_vendors',
+        'vendors.name as nameProv','products.external_code','products.quantity',
+        'weights.id as idWeights','weights.name as nameWeight','products.weight_quantity',
+        'unit_of_measurements.id as idMeasurement','unit_of_measurements.name as nameUnit','products.height_measurement','products.width_measurement',
         'products.depth_measurement','products.condition','products.picture')
         ->get();
         return ['prod'=>$prod];
@@ -48,10 +47,8 @@ class ProductsController extends Controller
     //Ingreso de Información:
     public function store(request $request){
         $prod = new Products;
-        $prod->id_navegate=$request->id_navegate;
         $prod->id_material=$request->id_material;
         $prod->id_supplier=$request->id_supplier;
-        //$prod->internal_code=$request->internal_code;
         $prod->external_code=$request->external_code;
         $prod->quantity=$request->quantity;
         $prod->id_unit_weight=$request->id_unit_weight;
@@ -68,10 +65,8 @@ class ProductsController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $prod = Products::findOrFail($request->id);
-        $prod->id_navegate=$request->id_navegate;
         $prod->id_material=$request->id_material;
         $prod->id_supplier=$request->id_supplier;
-        //$prod->internal_code=$request->internal_code;
         $prod->external_code=$request->external_code;
         $prod->quantity=$request->quantity;
         $prod->id_unit_weight=$request->id_unit_weight;

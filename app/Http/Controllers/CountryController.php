@@ -22,6 +22,10 @@ class CountryController extends Controller
         $count = Country::get();
         return['count'=>$count];
     }
+    public function index2(Request $request){
+        $count = Country::select('id','name')->get();
+        return['count'=>$count];
+    }
     //Ingreso de Información:
     public function store(request $request){
         $count = new Country;

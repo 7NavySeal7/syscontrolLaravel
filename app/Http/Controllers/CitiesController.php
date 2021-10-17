@@ -22,6 +22,10 @@ class CitiesController extends Controller
         $city = Cities::get();
         return['city'=>$city];
     }
+    public function index2(Request $request){
+        $city = Cities::get();
+        return['city'=>$city];
+    }
     //Ingreso de información:
     public function store(request $request){
         $city = new Cities;

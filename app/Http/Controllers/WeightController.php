@@ -22,10 +22,14 @@ class WeightController extends Controller
         $peso = Weight::get();
         return['peso'=>$peso];
     }
+
+    public function index2(Request $request){
+        $peso = Weight::get();
+        return['peso'=>$peso];
+    }
     //Ingreso de Información:
     public function store(request $request){
         $peso = new Weight;
-        $peso->id=$request->id;
         $peso->name=$request->name;
         $peso->description=$request->description;
         //Metodos Guardar:
@@ -34,7 +38,6 @@ class WeightController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $peso = Weight::findOrFail($request->id);
-        $peso->id=$request->id;
         $peso->name=$request->name;
         $peso->description=$request->description;
         //Metodos Guardar:

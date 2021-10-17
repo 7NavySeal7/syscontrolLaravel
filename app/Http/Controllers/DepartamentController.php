@@ -22,6 +22,10 @@ class DepartamentController extends Controller
         $depart = Departament::get();
         return['depart'=>$depart];
     }
+    public function index2(Request $request){
+        $depart = Departament::get();
+        return['depart'=>$depart];
+    }
     //Ingreso de Información:
     public function store(request $request){
         $depart = new Departament;

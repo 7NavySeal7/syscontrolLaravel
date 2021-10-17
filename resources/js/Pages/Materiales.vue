@@ -1,14 +1,14 @@
 <template>
     <app-layout title="Dashboard">
         <template #header>
-            <h2 class="font-semibold text-center text-xl text-blue-800 leading-tight">
+            <h2 class="font-semibold text-center text-xl text-black leading-tight">
                 MATERIALES
             </h2>
         </template>
                     <!--Formulario de Usuario-->
-                    <section v-if="window==0" class="max-w-4xl mx-auto bg-indigo-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
+                    <section v-if="window==0" class="border-gray-900 max-w-4xl mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
                         <div class="pt-1 pr-1 flex justify-end">
-                            <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-white transition-colors duration-200 transform rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-gray-600">
+                            <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-white transition-colors duration-200 transform rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                 height="24px" viewBox="0 0 24 24" 
                                 width="24px" fill="#000000">
@@ -20,34 +20,33 @@
                         <h1 class="text-xl font-bold text-black uppercase dark:text-white">{{titulo}}</h1>                      
                             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                                 <div>
-                                    <label class="text-white dark:text-gray-200" for="code">Código</label>
+                                    <label class="text-black dark:text-gray-200" for="code">Código</label>
                                     <input v-model="codigo" id="code" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                 </div>
 
                                 <div>
-                                    <label class="text-white dark:text-gray-200" for="name">Nombre</label>
+                                    <label class="text-black dark:text-gray-200" for="category">Categoria</label>
+                                    <select v-model="categoria" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                        <option v-for="item in arrayDatosCat" :key="item.id" :value="item.id">{{item.name}}</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-black dark:text-gray-200" for="name">Nombre</label>
                                     <input v-model="nombre" id="name" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                 </div>
 
                                 <div>
-                                    <label class="text-white dark:text-gray-200" for="category">Categoria</label>
-                                    <select v-model="categoria" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                        <option value="1">Metal</option>
-                                        <option value="2">Hierro</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label class="text-white dark:text-gray-200" for="description">Decripción</label>
+                                    <label class="text-black dark:text-gray-200" for="description">Decripción</label>
                                     <input v-model="descripcion" id="description" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                 </div>
 
                             </div>
                             <div v-if="accion==0" class="flex justify-end mt-6">
-                                <button type="button" @click="register" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
+                                <button title="Guardar" type="button" @click="register" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
                             </div>
                             <div v-else class="flex justify-end mt-6">
-                                <button type="button" @click="update" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
+                                <button title="Actualizar" type="button" @click="update" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
                             </div>
                         </form>
                     </section>
@@ -73,20 +72,21 @@
                                             </tr>
                                         </thead>
                                         <tbody class="text-gray-600 text-sm font-light">
-                                            <tr v-for="(objeto, index) in arrayDatos" :key="index" class="border-b border-gray-200 hover:bg-gray-100">
-                                                <td class="py-3 px-6 text-left whitespace-nowrap" v-text="objeto.code">
+                                            <tr v-for="(objeto, index) in arrayDatosMat" :key="index" class="border-b border-gray-200 hover:bg-gray-100">
                                                 
+                                                <td class="py-3 px-6 text-left" v-text="objeto.code">
                                                 </td>
-                                                <td class="py-3 px-6 text-left" v-text="objeto.name" >
-                                                
-                                                </td>
-                                                <td class="py-3 px-6 text-center" >
-                                                    <span v-if="objeto.id_category==1" class="bg-green-200 text-purple-600 py-1 px-3 rounded-full text-xs">Metal</span>
-                                                    <span v-if="objeto.id_category==2" class="bg-green-200 text-purple-600 py-1 px-3 rounded-full text-xs">Hierro</span>
-                                                </td>
-                                                <td class="py-3 px-6 text-center" v-text="objeto.description">
 
+                                                <td class="py-3 px-6 text-left" v-text="objeto.name" >
                                                 </td>
+
+                                                <td class="py-3 px-6 text-center" >
+                                                    <span value="objeto.idCat" v-text="objeto.nameCat" class="bg-blue-200 text-purple-600 py-1 px-3 rounded-full text-xs"></span>
+                                                </td>
+                                                
+                                                <td class="py-3 px-6 text-left" v-text="objeto.description">
+                                                </td>
+
                                                 <td class="py-3 px-6 text-center">
                                                     <div class="flex item-center justify-center">
                                                         <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110" title="Ver">
@@ -157,7 +157,8 @@
         },
         props:['material'],
         mounted() {
-            this.listarDatos();
+            this.listarDatosMat();
+            this.listarDatosCat();
         },
         data() {
             return {
@@ -169,19 +170,30 @@
                 nombre:"",
                 categoria:"",
                 descripcion:"",
-                arrayDatos:[]
+                arrayDatosMat:[],
+                arrayDatosCat:[]
             }
         },
         methods: {
-            listarDatos(){
+            listarDatosCat(){
                 let me=this;
-                var url="/api/materials/index2";
-                axios.get(url,{
-
-                })
+                var url="/api/categories/index2";
+                axios.get(url)
                 .then(function(response){
                     var respuesta=response.data;
-                    me.arrayDatos=respuesta.material;
+                    me.arrayDatosCat=respuesta.categ;
+                })
+                .catch(function(error){
+                    console.log(error);
+                })
+            },
+            listarDatosMat(){
+                let me=this;
+                var url="/api/materials/index2";
+                axios.get(url)
+                .then(function(response){
+                    var respuesta=response.data;
+                    me.arrayDatosMat=respuesta.material;
                 })
                 .catch(function(error){
                     console.log(error);
@@ -195,7 +207,8 @@
             },
             downRegister(){
                 this.window = 1, //Deshabilitar ventana de registro.
-                this.accion = 0
+                this.accion = 0,
+                this.clean();
             },
 /*----------------------------------------------------------------------------------------------------*/
 //Registrar
@@ -210,7 +223,7 @@
                 })
                 .then(function(response){
                     alert('Se registro correctamente');
-                    me.listarDatos();
+                    me.listarDatosMat();
                     me.clean();
                 })
                 .catch(function(error){
@@ -235,8 +248,8 @@
                     description:this.descripcion
                 })
                 .then(function(response){
-                    alert('Se registro correctamente');
-                    me.listarDatos();
+                    alert('Se actualizo correctamente');
+                    me.listarDatosMat();
                 })
                 .catch(function(error){
                     console.log(error);
@@ -246,7 +259,7 @@
                 this.idMat=data['id'],
                 this.codigo=data['code'],
                 this.nombre=data['name'],
-                this.categoria=data['id_category'],
+                this.categoria=data['idCat'],
                 this.descripcion=data['description'],
                 this.window = 0,
                 this.titulo = "Actualizar Registro de Material",
@@ -262,7 +275,7 @@
                 })
                 .then(function(response){
                     alert('Se elemino correctamente');
-                    me.listarDatos();
+                    me.listarDatosMat();
                     me.downRegister();
                 })
                 .catch(function(error){

@@ -22,10 +22,13 @@ class ChargesController extends Controller
         $charg = Charges::get();
         return['charg'=>$charg];
     }
+    public function index2(Request $request){
+        $charg = Charges::get();
+        return['charg'=>$charg];
+    }
     //Ingreso de Información:
     public function store(request $request){
         $charg = new Charges;
-        $charg->id=$request->id;
         $charg->name=$request->name;
         //Metodo Guardar:
         $charg->save();
@@ -33,7 +36,6 @@ class ChargesController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $charg = Charges::findOrFail($request->id);
-        $charg->id=$request->id;
         $charg->name=$request->name;
         //Metodo Guardar:
         $charg->save();

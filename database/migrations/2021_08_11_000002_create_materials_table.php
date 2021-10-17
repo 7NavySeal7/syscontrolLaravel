@@ -16,8 +16,8 @@ class CreateMaterialsTable extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->string('name');
             $table->foreignId('id_category')->constrained('categories');
+            $table->string('name');
             $table->string('description');
             $table->timestamps();
         });
