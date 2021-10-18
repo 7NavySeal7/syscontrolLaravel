@@ -6,7 +6,7 @@
             </h2>
         </template>
                     <!--Formulario de Usuario-->
-                    <section v-if="window==0" class="border-gray-900 max-w-4xl mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
+                    <section v-if="window==1" class="border-gray-900 max-w-4xl mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
                         <div class="pt-1 pr-1 flex justify-end">
                             <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-white transition-colors duration-200 transform rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" 
@@ -29,16 +29,16 @@
                                     <input v-model="descripcion" id="description" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                 </div>
                             </div>
-                            <div v-if="accion==0" class="flex justify-end mt-6">
+                            <div v-if="boton==0" class="flex justify-end mt-6">
                                 <button title="Guardar" type="button" @click="register" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
                             </div>
-                            <div v-else class="flex justify-end mt-6">
+                            <div v-if="boton==1" class="flex justify-end mt-6">
                                 <button title="Actualizar" type="button" @click="update" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
                             </div>
                         </form>
                     </section>
                     <!--Fin del Formulario de Usuario-->
-                <!-- Tabla -->
+                <!--Tabla Categoria-->
                 <div v-else class="overflow-x-auto">
                         <div class="min-w-screen min-h-screen flex items-start justify-center font-sans overflow-hidden">
                             <div class="w-full lg:w-auto">
@@ -95,11 +95,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Fin de la tabla -->
-                    <!-- Eliminar -->
-                    <div v-if="accion==2">
+                    <!--Fin de la tabla Categoria-->
+                    <!--Eliminar Categoria-->
+                    <div v-if="botonSupr==1">
                         <div class="bg-opacity-25 flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-600">
-                        <div class="flex flex-col p-8 bg-gray-500 shadow-md hover:shodow-lg rounded-2xl">
+                        <div class="flex flex-col p-8 bg-blue-900 shadow-md hover:shodow-lg rounded-2xl">
                             <div class="flex items-center justify-between">
                             <div class="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@
                                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                 <div class="flex flex-col ml-3">
-                                    <div class="font-medium leading-none">
+                                    <div class="text-white font-medium leading-none">
                                         ¿Desea eliminar este registro?
                                     </div>
                                     <p class="text-sm text-white leading-none mt-1">
@@ -123,6 +123,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--Fin de Eliminar Categoria-->
     </app-layout>
 </template>
 
@@ -132,7 +133,7 @@
     //import Welcome from '@/Jetstream/Welcome.vue'
 
     export default defineComponent({
-        props:['categ'],
+        //props:['categ'],
         components: {
             AppLayout
         },
@@ -141,9 +142,10 @@
         },
         data() {
             return {
-                window: 1, //1: Tabla 0: Nuevo Registro
-                titulo: "",
-                accion: 0, //0: Guardar Registro 1: Actualizar Registro
+                window:0, //0:Tabla 1:Nuevo Registro
+                titulo:"",
+                boton:0, //0: Guardar Registro 1: Actualizar Registro
+                botonSupr:0,
                 idCat:"",
                 nombre:"",
                 descripcion:"",
@@ -154,9 +156,7 @@
             listarDatos(){
                 let me=this;
                 var url="/api/categories/index2";
-                axios.get(url,{
-
-                })
+                axios.get(url)
                 .then(function(response){
                     var respuesta=response.data;
                     me.arrayDatos=respuesta.categ;
@@ -170,16 +170,24 @@
                 this.descripcion=""
             },
             downRegister(){
-                this.window = 1, //Tabla
-                this.accion = 0,
+                this.window=0, //Tabla
+                this.boton=1,
+                this.botonSupr=0,
                 this.clean();
             },
+            message(titulo,contenedor,boton){
+                Swal.fire(
+                    titulo,
+                    contenedor,
+                    boton
+                )
+            },
 /*-------------------------------------------------------------------------------------------------------*/
-//Registrar
+//Registrar Categoria
             openRegister(){
-                this.window = 0, //Habilitar ventana de registro.
-                this.titulo = "Registrar Nuevo Categoria",
-                this.accion = 0
+                this.window=1, //Habilitar ventana de registro.
+                this.titulo="Registrar Nueva Categoria",
+                this.boton=0
             },
             register(){
                 let me=this;
@@ -189,7 +197,7 @@
                     description:this.descripcion
                 })
                 .then(function(response){
-                    alert('Se registro correctamente');
+                    me.message('Se registro correctamente','El registro se ha registrado con éxito','success');
                     me.listarDatos();
                     me.clean();
                 })
@@ -198,7 +206,7 @@
                 })
             },
 /*-------------------------------------------------------------------------------------------------------*/
-//Actualizar
+//Actualizar Categoria
             update(){
                 let me=this;
                 var url="/api/categories/update";
@@ -208,7 +216,7 @@
                     description:this.descripcion
                 })
                 .then(function(response){
-                    alert('Se actualizo Correctamente');
+                    me.message('Se actualizo correctamente','El registro se ha actualizado con éxito','success');
                     me.listarDatos();
                 })
                 .catch(function(error){
@@ -219,12 +227,12 @@
                 this.idCat=data['id'],
                 this.nombre=data['name'],
                 this.descripcion=data['description'],
-                this.window = 0,
-                this.titulo = "Actualizar Registro de Categoria",
-                this.accion = 1
+                this.window=1,
+                this.titulo="Actualizar Registro de Categoria",
+                this.boton=1
             },
 /*-------------------------------------------------------------------------------------------------------*/
-//Eliminar
+//Eliminar Categoria
             destroy(){
                 let me=this;
                 var url="/api/categories/delete";
@@ -232,9 +240,9 @@
                     id:this.idCat,
                 })
                 .then(function(response){
-                    alert('Se elimino correctamente');
-                    me.listarDatos();
                     me.downRegister();
+                    me.message('Se elimino correctamente','El registro se ha eliminado con éxito','success');
+                    me.listarDatos();
                 })
                 .catch(function(error){
                     console.log(error);
@@ -242,10 +250,7 @@
             },
             destroyRegister(data=[]){
                 this.idCat=data['id'],
-                this.accion = 2
-            },
-            save(){
-                this.window = 1
+                this.botonSupr=1
             }
         },
     })

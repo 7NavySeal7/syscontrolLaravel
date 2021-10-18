@@ -5,8 +5,8 @@
                 PROVEEDORES
             </h2>
         </template>
-                    <!--Formulario de Usuario-->
-                    <section v-if="window==0" class="border-gray-900 max-w-4xl mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
+                    <!--Formulario de Proveedores-->
+                    <section v-if="window==1" class="border-gray-900 max-w-4xl mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 mt-2">
                         <div class="pt-1 pr-1 flex justify-end">
                             <button title="Cerrar" @click="downRegister" class="hover:scale-110 px-1 place-items-center leading-5 text-black transition-colors duration-200 transform rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" 
@@ -67,16 +67,16 @@
                                     </select>
                                 </div>
                             </div>
-                            <div v-if="accion==0" class="flex justify-end mt-6">
+                            <div v-if="boton==0" class="flex justify-end mt-6">
                                 <button type="button" @click="register" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Guardar</button>
                             </div>
-                            <div v-else class="flex justify-end mt-6">
+                            <div v-if="boton==1" class="flex justify-end mt-6">
                                 <button type="button" @click="update" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110">Actualizar</button>
                             </div>
                         </form>
                     </section>
                     <!--Fin del Formulario de Usuario-->
-                <!-- Tabla -->
+                <!-- Tabla Proveedor -->
                 <div v-else class="overflow-x-auto">
                         <div class="min-w-screen min-h-screen flex items-start justify-center  font-sans overflow-hidden">
                             <div class="w-full lg:w-auto">
@@ -151,11 +151,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Fin del tabla -->
-                    <!-- Eliminar -->
-                    <div v-if="accion==2">
+                    <!-- Fin de la Tabla Proveedor-->
+                    <!-- Eliminar Proveedor -->
+                    <div v-if="botonSupr==1">
                         <div class="bg-opacity-25 flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-600">
-                        <div class="flex flex-col p-8 bg-gray-500 shadow-md hover:shodow-lg rounded-2xl">
+                        <div class="flex flex-col p-8 bg-blue-900 shadow-md hover:shodow-lg rounded-2xl">
                             <div class="flex items-center justify-between">
                             <div class="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +165,7 @@
                                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                 <div class="flex flex-col ml-3">
-                                    <div class="font-medium leading-none">
+                                    <div class="text-white font-medium leading-none">
                                         ¿Desea eliminar este registro?
                                     </div>
                                     <p class="text-sm text-white leading-none mt-1">
@@ -179,6 +179,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--Fin Eliminar Proveedor-->
     </app-layout>
 </template>
 
@@ -200,10 +201,11 @@
         props:['proved'],
         data() {
             return {
-                window: 1, //1: Tabla 0: Nuevo Registro
-                titulo: "",
-                accion: 0,
-                idVendors:"", //0: Guardar Registro 1: Actualizar Registro
+                window:0, //0:Tabla 1:Nuevo Registro
+                titulo:"",
+                boton:0, //0:Guardar 1:Actualizar
+                botonSupr:0,
+                idVendors:"", //0:Guardar Registro 1:Actualizar Registro
                 nombre:"",
                 nit:"",
                 direccion:"",
@@ -288,16 +290,24 @@
                 })
             },
             downRegister(){
-                this.window = 1, //Deshabilitar ventana de registro.
-                this.accion = 0,
+                this.window=0, //Deshabilitar ventana de registro.
+                this.botonSupr=0,
+                this.boton=0,
                 this.clean();
+            },
+            message(titulo,contenedor,boton){
+                Swal.fire(
+                    titulo,
+                    contenedor,
+                    boton
+                )
             },
 /*------------------------------------------------------------------------------------------------------------*/
 //Registrar Proveedor
             openRegister(){
-                this.window = 0, //Habilitar ventana de registro.
-                this.titulo = "Registro de Proveedor",
-                this.accion = 0
+                this.window = 1, //Habilitar ventana de registro.
+                this.titulo = "Registrar Proveedor",
+                this.boton = 0
             },
             register(){
                 let me=this;
@@ -312,7 +322,7 @@
                     id_country:this.idPais
                 })
                 .then(function(response){
-                    alert('Se registro correctamente');
+                    me.message('Se registro correctamente','El registro se ha registrado con éxito','success');
                     me.listarDatosProv();
                     me.clean();
                 })
@@ -337,7 +347,7 @@
 
                 })
                 .then(function(response){
-                    alert('Se actualizo Correctamente');
+                    me.message('Se actualizo correctamente','El registro se ha actualizado con éxito','success');
                     me.listarDatosProv();
                 })
                 .catch(function(error){
@@ -355,9 +365,9 @@
                 this.idPais=data['idCountry'];
                 this.idDepart=data['idDepart'];
                 this.idCiudad=data['idCity'];
-                this.window = 0,
+                this.window = 1,
                 this.titulo = "Actualizar Registro de Proveedor",
-                this.accion = 1
+                this.boton = 1
             },
 /*------------------------------------------------------------------------------------------------------------*/
 //Eliminar Proveedor
@@ -368,9 +378,9 @@
                     id:this.idVendors,
                 })
                 .then(function(response){
-                    alert('Se elimino correctamente');
-                    me.listarDatosProv();
                     me.downRegister();
+                    me.message('Se elimino correctamente','El registro se ha eliminado con éxito','success');
+                    me.listarDatosProv();
                 })
                 .catch(function(error){
                     console.log(error);
@@ -378,10 +388,7 @@
             },
             destroy2(data=[]){
                 this.idVendors=data['id'];
-                this.accion = 2
-            },
-            save(){
-                this.window = 1
+                this.botonSupr=1
             }
         },
     })

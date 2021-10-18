@@ -20877,7 +20877,7 @@ __webpack_require__.r(__webpack_exports__);
  //import Welcome from '@/Jetstream/Welcome.vue'
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
-  props: ['categ'],
+  //props:['categ'],
   components: {
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -20886,11 +20886,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      window: 1,
-      //1: Tabla 0: Nuevo Registro
+      window: 0,
+      //0:Tabla 1:Nuevo Registro
       titulo: "",
-      accion: 0,
+      boton: 0,
       //0: Guardar Registro 1: Actualizar Registro
+      botonSupr: 0,
       idCat: "",
       nombre: "",
       descripcion: "",
@@ -20901,7 +20902,7 @@ __webpack_require__.r(__webpack_exports__);
     listarDatos: function listarDatos() {
       var me = this;
       var url = "/api/categories/index2";
-      axios.get(url, {}).then(function (response) {
+      axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayDatos = respuesta.categ;
       })["catch"](function (error) {
@@ -20912,15 +20913,18 @@ __webpack_require__.r(__webpack_exports__);
       this.nombre = "", this.descripcion = "";
     },
     downRegister: function downRegister() {
-      this.window = 1, //Tabla
-      this.accion = 0, this.clean();
+      this.window = 0, //Tabla
+      this.boton = 1, this.botonSupr = 0, this.clean();
+    },
+    message: function message(titulo, contenedor, boton) {
+      Swal.fire(titulo, contenedor, boton);
     },
 
     /*-------------------------------------------------------------------------------------------------------*/
-    //Registrar
+    //Registrar Categoria
     openRegister: function openRegister() {
-      this.window = 0, //Habilitar ventana de registro.
-      this.titulo = "Registrar Nuevo Categoria", this.accion = 0;
+      this.window = 1, //Habilitar ventana de registro.
+      this.titulo = "Registrar Nueva Categoria", this.boton = 0;
     },
     register: function register() {
       var me = this;
@@ -20929,7 +20933,7 @@ __webpack_require__.r(__webpack_exports__);
         name: this.nombre,
         description: this.descripcion
       }).then(function (response) {
-        alert('Se registro correctamente');
+        me.message('Se registro correctamente', 'El registro se ha registrado con éxito', 'success');
         me.listarDatos();
         me.clean();
       })["catch"](function (error) {
@@ -20938,7 +20942,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     /*-------------------------------------------------------------------------------------------------------*/
-    //Actualizar
+    //Actualizar Categoria
     update: function update() {
       var me = this;
       var url = "/api/categories/update";
@@ -20947,7 +20951,7 @@ __webpack_require__.r(__webpack_exports__);
         name: this.nombre,
         description: this.descripcion
       }).then(function (response) {
-        alert('Se actualizo Correctamente');
+        me.message('Se actualizo correctamente', 'El registro se ha actualizado con éxito', 'success');
         me.listarDatos();
       })["catch"](function (error) {
         console.log(error);
@@ -20955,30 +20959,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateRegister: function updateRegister() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.idCat = data['id'], this.nombre = data['name'], this.descripcion = data['description'], this.window = 0, this.titulo = "Actualizar Registro de Categoria", this.accion = 1;
+      this.idCat = data['id'], this.nombre = data['name'], this.descripcion = data['description'], this.window = 1, this.titulo = "Actualizar Registro de Categoria", this.boton = 1;
     },
 
     /*-------------------------------------------------------------------------------------------------------*/
-    //Eliminar
+    //Eliminar Categoria
     destroy: function destroy() {
       var me = this;
       var url = "/api/categories/delete";
       axios.post(url, {
         id: this.idCat
       }).then(function (response) {
-        alert('Se elimino correctamente');
-        me.listarDatos();
         me.downRegister();
+        me.message('Se elimino correctamente', 'El registro se ha eliminado con éxito', 'success');
+        me.listarDatos();
       })["catch"](function (error) {
         console.log(error);
       });
     },
     destroyRegister: function destroyRegister() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.idCat = data['id'], this.accion = 2;
-    },
-    save: function save() {
-      this.window = 1;
+      this.idCat = data['id'], this.botonSupr = 1;
     }
   }
 }));
@@ -21031,18 +21032,19 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['material'],
+  //props:['material'],
   mounted: function mounted() {
     this.listarDatosMat();
     this.listarDatosCat();
   },
   data: function data() {
     return {
-      window: 1,
-      //1: Tabla 0: Nuevo Registro
+      window: 0,
+      //0:Tabla 1:Nuevo Registro
       titulo: "",
-      accion: 0,
-      //0: Guardar Registro 1: Actualizar Registro
+      boton: 0,
+      //0:Guardar Registro 1:Actualizar Registro
+      botonSupr: 0,
       idMat: "",
       codigo: "",
       nombre: "",
@@ -21073,16 +21075,19 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    downRegister: function downRegister() {
+      this.window = 0, //Deshabilitar ventana de Formulario.
+      this.accion = 0, this.botonSupr = 0, this.clean();
+    },
+    message: function message(titulo, contenedor, boton) {
+      Swal.fire(titulo, contenedor, boton);
+    },
     clean: function clean() {
       this.codigo = "", this.nombre = "", this.categoria = "", this.descripcion = "";
     },
-    downRegister: function downRegister() {
-      this.window = 1, //Deshabilitar ventana de registro.
-      this.accion = 0, this.clean();
-    },
 
     /*----------------------------------------------------------------------------------------------------*/
-    //Registrar
+    //Registrar Material
     register: function register() {
       var me = this;
       var url = "/api/materials/store";
@@ -21092,7 +21097,7 @@ __webpack_require__.r(__webpack_exports__);
         id_category: this.categoria,
         description: this.descripcion
       }).then(function (response) {
-        alert('Se registro correctamente');
+        me.message('Se registro correctamente', 'El registro se ha registrado con éxito', 'success');
         me.listarDatosMat();
         me.clean();
       })["catch"](function (error) {
@@ -21100,12 +21105,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     openRegister: function openRegister() {
-      this.window = 0, //Habilitar ventana de registro.
+      this.window = 1, //Habilitar ventana de registro.
       this.titulo = "Registrar Nuevo Material", this.accion = 0;
     },
 
     /*----------------------------------------------------------------------------------------------------*/
-    //Actualizar
+    //Actualizar Material
     update: function update() {
       var me = this;
       var url = "/api/materials/update";
@@ -21116,7 +21121,7 @@ __webpack_require__.r(__webpack_exports__);
         id_category: this.categoria,
         description: this.descripcion
       }).then(function (response) {
-        alert('Se actualizo correctamente');
+        me.message('Se actualizo correctamente', 'El registro se ha actualizado con éxito', 'success');
         me.listarDatosMat();
       })["catch"](function (error) {
         console.log(error);
@@ -21124,30 +21129,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateRegister: function updateRegister() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.idMat = data['id'], this.codigo = data['code'], this.nombre = data['name'], this.categoria = data['idCat'], this.descripcion = data['description'], this.window = 0, this.titulo = "Actualizar Registro de Material", this.accion = 1;
+      this.idMat = data['id'], this.codigo = data['code'], this.nombre = data['name'], this.categoria = data['idCat'], this.descripcion = data['description'], this.window = 1, this.titulo = "Actualizar Registro de Material", this.boton = 1;
     },
 
     /*----------------------------------------------------------------------------------------------------*/
-    //Eliminar
+    //Eliminar Material
     destroy: function destroy() {
       var me = this;
       var url = "/api/materials/delete";
       axios.post(url, {
         id: this.idMat
       }).then(function (response) {
-        alert('Se elemino correctamente');
-        me.listarDatosMat();
         me.downRegister();
+        me.message('Se elimino correctamente', 'El registro se ha eliminado con éxito', 'success');
+        me.listarDatosMat();
       })["catch"](function (error) {
         console.log(error);
       });
     },
     destroyRegister: function destroyRegister() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-      this.idMat = data['id'], this.accion = 2;
-    },
-    save: function save() {
-      this.window = 1;
+      this.idMat = data['id'], this.botonSupr = 1;
     }
   }
 }));
@@ -22052,12 +22054,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ['proved'],
   data: function data() {
     return {
-      window: 1,
-      //1: Tabla 0: Nuevo Registro
+      window: 0,
+      //0:Tabla 1:Nuevo Registro
       titulo: "",
-      accion: 0,
+      boton: 0,
+      //0:Guardar 1:Actualizar
+      botonSupr: 0,
       idVendors: "",
-      //0: Guardar Registro 1: Actualizar Registro
+      //0:Guardar Registro 1:Actualizar Registro
       nombre: "",
       nit: "",
       direccion: "",
@@ -22118,15 +22122,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     downRegister: function downRegister() {
-      this.window = 1, //Deshabilitar ventana de registro.
-      this.accion = 0, this.clean();
+      this.window = 0, //Deshabilitar ventana de registro.
+      this.botonSupr = 0, this.boton = 0, this.clean();
+    },
+    message: function message(titulo, contenedor, boton) {
+      Swal.fire(titulo, contenedor, boton);
     },
 
     /*------------------------------------------------------------------------------------------------------------*/
     //Registrar Proveedor
     openRegister: function openRegister() {
-      this.window = 0, //Habilitar ventana de registro.
-      this.titulo = "Registro de Proveedor", this.accion = 0;
+      this.window = 1, //Habilitar ventana de registro.
+      this.titulo = "Registrar Proveedor", this.boton = 0;
     },
     register: function register() {
       var me = this;
@@ -22140,7 +22147,7 @@ __webpack_require__.r(__webpack_exports__);
         web: this.web,
         id_country: this.idPais
       }).then(function (response) {
-        alert('Se registro correctamente');
+        me.message('Se registro correctamente', 'El registro se ha registrado con éxito', 'success');
         me.listarDatosProv();
         me.clean();
       })["catch"](function (error) {
@@ -22163,7 +22170,7 @@ __webpack_require__.r(__webpack_exports__);
         web: this.web,
         id_country: this.idPais
       }).then(function (response) {
-        alert('Se actualizo Correctamente');
+        me.message('Se actualizo correctamente', 'El registro se ha actualizado con éxito', 'success');
         me.listarDatosProv();
       })["catch"](function (error) {
         console.log(error);
@@ -22181,7 +22188,7 @@ __webpack_require__.r(__webpack_exports__);
       this.idPais = data['idCountry'];
       this.idDepart = data['idDepart'];
       this.idCiudad = data['idCity'];
-      this.window = 0, this.titulo = "Actualizar Registro de Proveedor", this.accion = 1;
+      this.window = 1, this.titulo = "Actualizar Registro de Proveedor", this.boton = 1;
     },
 
     /*------------------------------------------------------------------------------------------------------------*/
@@ -22192,9 +22199,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(url, {
         id: this.idVendors
       }).then(function (response) {
-        alert('Se elimino correctamente');
-        me.listarDatosProv();
         me.downRegister();
+        me.message('Se elimino correctamente', 'El registro se ha eliminado con éxito', 'success');
+        me.listarDatosProv();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -22202,10 +22209,7 @@ __webpack_require__.r(__webpack_exports__);
     destroy2: function destroy2() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       this.idVendors = data['id'];
-      this.accion = 2;
-    },
-    save: function save() {
-      this.window = 1;
+      this.botonSupr = 1;
     }
   }
 }));
@@ -26758,7 +26762,7 @@ var _hoisted_36 = {
   "class": "bg-opacity-25 flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-600"
 };
 var _hoisted_37 = {
-  "class": "flex flex-col p-8 bg-gray-500 shadow-md hover:shodow-lg rounded-2xl"
+  "class": "flex flex-col p-8 bg-blue-900 shadow-md hover:shodow-lg rounded-2xl"
 };
 var _hoisted_38 = {
   "class": "flex items-center justify-between"
@@ -26780,7 +26784,7 @@ var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex flex-col ml-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "font-medium leading-none"
+  "class": "text-white font-medium leading-none"
 }, " ¿Desea eliminar este registro? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-sm text-white leading-none mt-1"
 }, " Este proceso no es reversible ¿Está seguro? ")])], -1
@@ -26797,7 +26801,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_1];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_ctx.window == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      return [_ctx.window == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         title: "Cerrar",
         onClick: _cache[0] || (_cache[0] = function () {
           return _ctx.downRegister && _ctx.downRegister.apply(_ctx, arguments);
@@ -26823,23 +26827,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.descripcion]])])]), _ctx.accion == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.descripcion]])])]), _ctx.boton == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         title: "Guardar",
         type: "button",
         onClick: _cache[3] || (_cache[3] = function () {
           return _ctx.register && _ctx.register.apply(_ctx, arguments);
         }),
         "class": "focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110"
-      }, "Guardar")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, "Guardar")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.boton == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         title: "Actualizar",
         type: "button",
         onClick: _cache[4] || (_cache[4] = function () {
           return _ctx.update && _ctx.update.apply(_ctx, arguments);
         }),
         "class": "focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110"
-      }, "Actualizar")]))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      }, "Actualizar")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 1
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin del Formulario de Usuario"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Tabla "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Boton de Nuevo Registro"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin del Formulario de Usuario"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Tabla Categoria"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Boton de Nuevo Registro"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         onClick: _cache[5] || (_cache[5] = function () {
           return _ctx.openRegister && _ctx.openRegister.apply(_ctx, arguments);
         }),
@@ -26879,7 +26883,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))])])])])])])], 2112
       /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
-      )), _ctx.accion == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      )), _ctx.botonSupr == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[6] || (_cache[6] = function () {
           return _ctx.destroy && _ctx.destroy.apply(_ctx, arguments);
         }),
@@ -27163,7 +27167,7 @@ var _hoisted_40 = {
   "class": "bg-opacity-25 flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-600"
 };
 var _hoisted_41 = {
-  "class": "flex flex-col p-8 bg-gray-500 shadow-md hover:shodow-lg rounded-2xl"
+  "class": "flex flex-col p-8 bg-blue-900 shadow-md hover:shodow-lg rounded-2xl"
 };
 var _hoisted_42 = {
   "class": "flex items-center justify-between"
@@ -27185,7 +27189,7 @@ var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex flex-col ml-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "font-medium leading-none"
+  "class": "text-white font-medium leading-none"
 }, " ¿Desea eliminar este registro? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-sm text-white leading-none mt-1"
 }, " Este proceso no es reversible ¿Está seguro? ")])], -1
@@ -27202,7 +27206,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_1];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_ctx.window == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      return [_ctx.window == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         title: "Cerrar",
         onClick: _cache[0] || (_cache[0] = function () {
           return _ctx.downRegister && _ctx.downRegister.apply(_ctx, arguments);
@@ -27253,23 +27257,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.descripcion]])])]), _ctx.accion == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.descripcion]])])]), _ctx.boton == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         title: "Guardar",
         type: "button",
         onClick: _cache[5] || (_cache[5] = function () {
           return _ctx.register && _ctx.register.apply(_ctx, arguments);
         }),
         "class": "focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110"
-      }, "Guardar")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, "Guardar")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.boton == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         title: "Actualizar",
         type: "button",
         onClick: _cache[6] || (_cache[6] = function () {
           return _ctx.update && _ctx.update.apply(_ctx, arguments);
         }),
         "class": "focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110"
-      }, "Actualizar")]))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      }, "Actualizar")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 1
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin del Formulario de Usuario"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Tabla "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Boton de Nuevo Registro"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin del Formulario de Usuario"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Tabla Material"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Boton de Nuevo Registro"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         onClick: _cache[7] || (_cache[7] = function () {
           return _ctx.openRegister && _ctx.openRegister.apply(_ctx, arguments);
         }),
@@ -27320,7 +27324,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))])])])])])])], 2112
       /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
-      )), _ctx.accion == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      )), _ctx.botonSupr == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[8] || (_cache[8] = function () {
           return _ctx.destroy && _ctx.destroy.apply(_ctx, arguments);
         }),
@@ -29875,7 +29879,7 @@ var _hoisted_50 = {
   "class": "bg-opacity-25 flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster fixed left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-600"
 };
 var _hoisted_51 = {
-  "class": "flex flex-col p-8 bg-gray-500 shadow-md hover:shodow-lg rounded-2xl"
+  "class": "flex flex-col p-8 bg-blue-900 shadow-md hover:shodow-lg rounded-2xl"
 };
 var _hoisted_52 = {
   "class": "flex items-center justify-between"
@@ -29897,7 +29901,7 @@ var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex flex-col ml-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "font-medium leading-none"
+  "class": "text-white font-medium leading-none"
 }, " ¿Desea eliminar este registro? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-sm text-white leading-none mt-1"
 }, " Este proceso no es reversible ¿Está seguro? ")])], -1
@@ -29914,7 +29918,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_1];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_ctx.window == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      return [_ctx.window == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         title: "Cerrar",
         onClick: _cache[0] || (_cache[0] = function () {
           return _ctx.downRegister && _ctx.downRegister.apply(_ctx, arguments);
@@ -30024,21 +30028,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.idCiudad]])])]), _ctx.accion == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.idCiudad]])])]), _ctx.boton == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         type: "button",
         onClick: _cache[10] || (_cache[10] = function () {
           return _ctx.register && _ctx.register.apply(_ctx, arguments);
         }),
         "class": "focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110"
-      }, "Guardar")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, "Guardar")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.boton == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         type: "button",
         onClick: _cache[11] || (_cache[11] = function () {
           return _ctx.update && _ctx.update.apply(_ctx, arguments);
         }),
         "class": "focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-green-400 to-green-600 transform hover:scale-110"
-      }, "Actualizar")]))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      }, "Actualizar")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 1
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin del Formulario de Usuario"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Tabla "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Boton de Nuevo Registro"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fin del Formulario de Usuario"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Tabla Proveedor "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Boton de Nuevo Registro"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         onClick: _cache[12] || (_cache[12] = function () {
           return _ctx.openRegister && _ctx.openRegister.apply(_ctx, arguments);
         }),
@@ -30104,7 +30108,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))])])])])])])], 2112
       /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
-      )), _ctx.accion == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [_hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      )), _ctx.botonSupr == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [_hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[13] || (_cache[13] = function () {
           return _ctx.destroy1 && _ctx.destroy1.apply(_ctx, arguments);
         }),
