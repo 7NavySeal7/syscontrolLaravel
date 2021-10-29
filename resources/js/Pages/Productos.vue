@@ -46,9 +46,9 @@
             <!--Fin de Formulario Nueva Unidad de Peso-->
             <!--Tabla Registrio Unidad de Peso-->
             <div class="overflow-x-auto">
+                        <h1 class="uppercase font-semibold text-center text-xl text-blacks leading-tight">UNIDADES DE PESO REGISTRADAS</h1>
                 <div class="min-w-screen min-h-screen flex items-start justify-center font-sans overflow-hidden">
                     <div class="w-full lg:w-auto">
-                        <h1 class="uppercase font-semibold text-center text-xl text-blacks leading-tight">Roles Registrados</h1>
                         <div class="bg-white shadow-md rounded my-6">
                             <table class="min-w-auto w-auto table-auto">
                                 <thead>
@@ -160,9 +160,9 @@
             <!--Fin de Formulario Nueva Unidad de Medida-->
             <!--Tabla Registrio Unidad de Medida-->
             <div class="overflow-x-auto">
+                        <h1 class="uppercase font-semibold text-center text-xl text-blacks leading-tight">UNIDADES DE MEDIDA REGISTRADAS</h1>
                 <div class="min-w-screen min-h-screen flex items-start justify-center font-sans overflow-hidden">
                     <div class="w-full lg:w-auto">
-                        <h1 class="uppercase font-semibold text-center text-xl text-blacks leading-tight">Roles Registrados</h1>
                         <div class="bg-white shadow-md rounded my-6">
                             <table class="min-w-auto w-auto table-auto">
                                 <thead>
@@ -310,7 +310,7 @@
                         <label class="text-black dark:text-gray-200" for="condition">Condición</label>
                         <select v-model="condicion" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                             <option value="1">Nuevo</option>
-                            <option value="2">Usado</option>
+                            <option value="0">Usado</option>
                         </select>
                     </div>
                     <!--Seleccionar Imagén-->
@@ -366,14 +366,20 @@
                             <div class="w-full lg:w-auto">
                             <!--Boton de Nuevo Registro-->
                             <div @click="openRegisterProd" class="pt-1.5 inline-block mr-2 mt-2">
-                                <button type="button" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Añadir Producto</button>
+                                <button type="button" class="font-bold focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-400 to-blue-600 transform hover:scale-110">Añadir Producto</button>
                             </div>
                             <div @click="openRegisterUnits" class="pt-1.5 inline-block mr-2 mt-2">
-                                <button type="button" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-800 to-blue-800 transform hover:scale-110">Añadir Medida</button>
+                                <button type="button" class="font-bold focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-800 to-blue-800 transform hover:scale-110">Añadir Medida</button>
                             </div>
                             <div @click="openRegisterWeights" class="pt-1.5 inline-block mr-2 mt-2">
-                                <button type="button" class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-800 to-blue-800 transform hover:scale-110">Añadir Peso</button>
+                                <button type="button" class="icon-placeholder font-bold focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-gradient-to-r from-blue-800 to-blue-800 transform hover:scale-110">Añadir Peso</button>
                             </div>
+                            <!--Barra de Busqueda-->
+                            <div class="pt-1.5 inline-block mr-2 mt-2">
+                                <input class="w-80 icon-placeholder rounded-l-lg pl-4 py-2 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white" placeholder=""/>
+                                <button type="button" class="px-4 py-2 rounded-r-lg bg-blue-800 text-white font-bold pl-4 uppercase border-blue-800 border-t border-b border-r transform hover:scale-110">BUSCAR</button>
+                            </div>
+                            <!--Fin de la Barra de Busqueda-->
                             <!--Fin del Boton-->
                                 <div class="bg-white shadow-md rounded my-6">
                                     <table class="min-w-auto w-auto table-auto">
@@ -384,7 +390,7 @@
                                                 <th class="py-3 px-6 text-center">Código Externo</th>
                                                 <th class="py-3 px-6 text-center">Cantidad</th>
                                                 <th class="py-3 px-6 text-center">Condición</th>
-                                                <th class="py-3 px-6 text-center">Imagén</th>
+                                                <!--<th class="py-3 px-6 text-center">Imagén</th>-->
                                                 <th class="py-3 px-6 text-center">Acciones</th>
                                             </tr>
                                         </thead>
@@ -412,8 +418,8 @@
                                                     Usado
                                                 </td>
 
-                                                <td class="py-3 px-6 text-center" v-text="objeto.picture">
-                                                </td>
+                                                <!--<td class="py-3 px-6 text-center" v-text="objeto.picture">
+                                                </td>-->
 
                                                 <td class="py-3 px-6 text-center">
                                                     <div class="flex item-center justify-center">
@@ -498,6 +504,7 @@
                 boton: 0, //0: Guardar Registro 1: Actualizar Registro
                 botonSupr:0,
                 botonReg:0,
+                search:0,
                 //Variables de unidades de peso
                 idPeso:"",
                 nombrePeso:"",
@@ -622,6 +629,9 @@
                 this.anchoMed="",
                 this.profundidadMed="",
                 this.condicion=""
+            },
+            searchMethod(){
+                this.search=1
             },
             message(titulo,contenedor,boton){
                 Swal.fire(
@@ -915,3 +925,9 @@
         },
     })
 </script>
+<style>
+    ::placeholder{
+        font-family: "Font Awesome 5 Free"; 
+        font-weight: 900;
+    }
+</style>

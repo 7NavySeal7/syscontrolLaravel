@@ -2,7 +2,7 @@
     <app-layout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-center text-xl text-blacks leading-tight">
-                USUARIOS REGISTRADOS
+                USUARIOS
             </h2>
         </template>
                     <!--Formulario registro de nuevo Rol-->

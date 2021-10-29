@@ -34,9 +34,16 @@ class AssignMaterialController extends Controller
         ->join('categories','materials.id_category','categories.id')
         ->select('user_materials.quantity','materials.name as nameMat','products.picture','categories.name as nameCat')
         ->get();
-        return inertia::render('Asignacion',['assign'=>$assign, 'detAssign'=>$detAssign ]);
+        return inertia::render('Asignacion',['assign'=>$assign]);  
+    }
+    public function index2(Request $request){
+        $assign = AssignMaterial::join('navegates','assign_materials.id_navegate','navegates.id')
+        ->join('charges','navegates.id_charge','charges.id')
+        ->join('roles','navegates.id_roles','roles.id')
+        ->select('assign_materials.date','roles.name as nameRol','charges.name as nameCharg','navegates.name as nameNav')
+        ->get();
+        return ['assign'=>$assign];
         // $info = array_merge($assign,$detAssign);
-        
     }
     //Ingreso de información:
     public function store(Request $request){

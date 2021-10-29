@@ -167,6 +167,7 @@ Route::post('/api/assign/store',[AssignMaterialController::class,'store']); //tr
 Route::put('/api/assign/update',[AssignMaterialController::class,'update']); //true
 Route::delete('/api/assign/delete',[AssignMaterialController::class,'destroy']); //true
 Route::middleware(['auth:sanctum', 'verified'])->get('/api/assign/index',[AssignMaterialController::class,'index'])->name('asignacionMaterial'); //true
+Route::middleware(['auth:sanctum', 'verified'])->get('/api/assign/index2',[AssignMaterialController::class,'index2']); //true
 Route::get('/api/assign/getData',[AssignMaterialController::class,'getData']); //true
 
 
