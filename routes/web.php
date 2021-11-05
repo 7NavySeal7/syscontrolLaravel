@@ -178,4 +178,7 @@ Route::put('/api/user_material/update',[UserMaterialController::class,'update'])
 Route::get('/api/user_material/index',[UserMaterialController::class,'index'])->name('userMaterial'); //true
 Route::get('/api/user_material/getData',[UserMaterialController::class,'getData']); //true
 
+if (App::environment('production')) {
+    URL::forceScheme('https');
+}
 /*-------------------------------------------------------------------------------------------------------*/
