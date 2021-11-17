@@ -303,7 +303,7 @@
                 )
             },
 /*------------------------------------------------------------------------------------------------------------*/
-//Registrar Proveedor
+ //Registrar Proveedor
             openRegister(){
                 this.window = 1, //Habilitar ventana de registro.
                 this.titulo = "Registrar Proveedor",

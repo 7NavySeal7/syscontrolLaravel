@@ -31,7 +31,6 @@ class CategoryController extends Controller
     //Ingreso de Información:
     public function store(request $request){
         $categ = new Category;
-        $categ->id=$request->id;
         $categ->name=$request->name;
         $categ->description=$request->description;
         //Metodo Guardar:
@@ -40,7 +39,6 @@ class CategoryController extends Controller
     //Actualización de información:
     public function update(Request $request){
         $categ = Category::findOrFail($request->id);
-        $categ->id=$request->id;
         $categ->name=$request->name;
         $categ->description=$request->description;
         //Metodo Guardar:

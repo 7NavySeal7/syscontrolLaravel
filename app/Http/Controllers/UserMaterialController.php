@@ -35,7 +35,6 @@ class UserMaterialController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $useMat = UserMaterial::findOrFail($request->id);
-        $useMat->id=$request->id;
         $useMat->id_assign_material=$request->id_assign_material;
         $useMat->id_product=$request->id_product;
         $useMat->quantity=$request->quantity;
