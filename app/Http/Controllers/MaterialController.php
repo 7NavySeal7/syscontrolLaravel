@@ -45,6 +45,7 @@ class MaterialController extends Controller
     //Actualización de Información:
     public function update(Request $request){
         $material = Material::findOrFail($request->id);
+        $material->code=$request->code;
         $material->name=$request->name;
         $material->id_category=$request->id_category;
         $material->description=$request->description;
